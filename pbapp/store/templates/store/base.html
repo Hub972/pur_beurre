@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Pur Beurre</title>
+  {% load static %}
+
+  <!-- Font Awesome Icons -->
+  <link href='{% static "store/vendor/fontawesome-free/css/all.min.css" %}' rel="stylesheet" type="text/css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- Plugin CSS -->
+  <link href='{% static "store/vendor/magnific-popup/magnific-popup.css" %}' rel="stylesheet">
+
+  <!-- Theme CSS - Includes Bootstrap -->
+  <link href="{% static 'store/css/creative.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container">
+      <img src="{% static 'store/img/biscuit1.png' %}" alt="iône biscuit" ><a class="navbar-brand js-scroll-trigger" href="#page-top">Pur beurre</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          <li class="nav-item">
+            <input id="inputForm"  type="text" name="texte" style="color : black;">
+
+                      <button id="envoi" class="nav-link js-scroll-trigger">Envoyer</button>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="{% url 'store:login' %}" ><i class="fas fa-user fa-2x"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#services"><img src="{% static 'store/img/Carrot1.png' %}" alt="iône carrot" class="icône"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#portfolio"><i class="fas fa-sign-out-alt fa-2x"></i></a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Masthead -->
+  <header class="masthead">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center justify-content-center text-center">
+
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+
+{% block content %}{% endblock %}
+  <!-- Footer -->
+  <footer class="bg-light py-5">
+    <div class="container">
+      <div class="small text-center text-muted">Copyright &copy; 2019 - Y.Assouvie pour OpenClassrooms</div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'store/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'store/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="{% static 'store/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'store/vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="{% static 'store/js/creative.min.js' %}"></script>
+
+</body>
+
+</html>

@@ -22,6 +22,6 @@ from store import views
 
 urlpatterns = [
     url('admin/', admin.site.urls),
-    #url('store/', include('store.urls')),
+    url('store/', include('store.urls', namespace='store')),
     url('', views.index, name='index')
 ]
