@@ -14,6 +14,7 @@ from .models import ProductsNutriTypeA, Favorite
 
 
 def index(request):
+    """Display index page"""
     form = searchProduct()
     context = {'form':form}
     print('ici index')
@@ -21,6 +22,7 @@ def index(request):
 
 
 def login(request):
+    """display register or login"""
     form = searchProduct()
     if request.method == 'POST':
         form = Register(request.POST, error_class=ParagraphErrorList)
@@ -54,6 +56,7 @@ def login(request):
 
 
 def search(request):
+    """Display the results for the request"""
     form = searchProduct(request.POST, error_class=ParagraphErrorList)
     if form.is_valid():
         item = form.cleaned_data['search']
@@ -77,6 +80,7 @@ def search(request):
 
 @login_required
 def display_my_products(request):
+    """display the favorite"""
     form = searchProduct
     id_user = request.user.id
     user = get_object_or_404(User, pk=id_user)
@@ -99,6 +103,7 @@ def display_my_products(request):
 
 @login_required
 def add_product_to_favorite(request, id):
+    """Add product to favorite"""
     product = get_object_or_404(ProductsNutriTypeA, pk=id)
     id_user = request.user.id
     user = get_object_or_404(User, pk=id_user)
@@ -113,6 +118,7 @@ def add_product_to_favorite(request, id):
 
 
 def detail(request, id):
+    """Display the product detail"""
     form = searchProduct
     product = get_object_or_404(ProductsNutriTypeA, pk=id)
     code = product.code
@@ -144,6 +150,7 @@ def detail(request, id):
 
 
 def log_out(request):
+    """Disconnect user"""
     logout(request)
     return HttpResponseRedirect('store/index.html')
 
