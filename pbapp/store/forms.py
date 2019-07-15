@@ -13,7 +13,7 @@ class Register(forms.Form):
     )
     email = forms.EmailField(
         label='email',
-        widget=forms.EmailInput(attrs={'class':'form-group', 'placeholder':'Nom'}),
+        widget=forms.EmailInput(attrs={'class':'form-group', 'placeholder':'Email'}),
         required=True
     )
     passwd = forms.CharField(
@@ -22,6 +22,13 @@ class Register(forms.Form):
         required=True
     )
 
+
+class searchProduct(forms.Form):
+    search = forms.CharField(
+        label='search',
+        widget=forms.TextInput(attrs={'class':'form-inline'}),
+        required=False
+    )
 
 class ParagraphErrorList(ErrorList):
     def __str__(self):

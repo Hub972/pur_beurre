@@ -1,11 +1,46 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
-<form class="form-inline" action="{% url 'store:login' %}" method="post">
+
+    {% if register %}
+    <section class="page-section">
+
+    <div class="container">
+       <div class="row justify-content-center" style="margin-left: 476px;">
+        <div class="col-lg-8 text-center">
+          <h1 class="text-white mt-0 text-center">{{ user }}</h1>
+          <hr class="divider light my-4" style="margin-left: 4px;border-left-width: 5.2rem;border-left-style: solid;">
+        </div>
+      </div>>
+
+        </div>
+      </div>
+    </div>
+  </section>
+<section class="page-section">
+
+    <div class="container">
+       <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h1 class="text-white mt-0 text-center">{{ mail }}</h1>
+          <hr class="divider light my-4">
+        </div>
+      </div>>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+    {% elif not register %}
+<form id="monForm" action="{% url 'store:login' %}" method="post">
     {% csrf_token %}
 
-        {{ form }}
-     <button type="submit" class="btn btn-success">Réserver</button>
+        {{ forml }}
+     <button type="submit" class="btn btn-success">Enregistrer</button>
 </form>
+    {% endif %}
+</div>
 
 {% endblock %}

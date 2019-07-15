@@ -31,22 +31,26 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-      <img src="{% static 'store/img/biscuit1.png' %}" alt="iône biscuit" ><a class="navbar-brand js-scroll-trigger" href="#page-top">Pur beurre</a>
+      <img src="{% static 'store/img/biscuit1.png' %}" alt="iône biscuit" ><a class="navbar-brand js-scroll-trigger" href="{% url 'store:index' %}">Pur beurre</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <li class="nav-item">
-            <input id="inputForm"  type="text" name="texte" style="color : black;">
+            <form class="form-inline" action="{% url 'store:search' %}" method="post">
+                {% csrf_token %}
+           <!-- <input id="inputForm"  type="text" name="texte" style="color : black;"> -->
+                {{ form }}
 
-                      <button id="envoi" class="nav-link js-scroll-trigger">Envoyer</button>
+          <button id="envoi" class="nav-link js-scroll-trigger">Chercher</button>
+            </form>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="{% url 'store:login' %}" ><i class="fas fa-user fa-2x"></i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#services"><img src="{% static 'store/img/Carrot1.png' %}" alt="iône carrot" class="icône"></a>
+            <a class="nav-link js-scroll-trigger" href="{% url 'store:show' %}"><i class="fas fa-carrot fa-2x"></i></a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#portfolio"><i class="fas fa-sign-out-alt fa-2x"></i></a>
@@ -58,27 +62,32 @@
   </nav>
 
   <!-- Masthead -->
-  <header class="masthead">
-    <div class="container h-100">
-      <div class="row h-100 align-items-center justify-content-center text-center">
 
+    <div class="container">
+      <div class="row">
+
+{% block content %}{% endblock %}
       </div>
     </div>
-  </header>
+
 
   <!-- About Section -->
 
-{% block content %}{% endblock %}
+
   <!-- Footer -->
-  <footer class="bg-light py-5">
+  <footer class="fixed-bottom">
     <div class="container">
-      <div class="small text-center text-muted">Copyright &copy; 2019 - Y.Assouvie pour OpenClassrooms</div>
+      <div class="row">
+  <div class="col-md-6 text-center"><a href="{% static 'store/pdf/mlg.pdf' %}"> Mention légales</a></div>
+        <div class="col-md-6 text-center"><a href="store/index/#contact">Contact</a></div>
+</div>
+
     </div>
   </footer>
 
   <!-- Bootstrap core JavaScript -->
   <script src="{% static 'store/vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'store/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'store/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
 
   <!-- Plugin JavaScript -->
   <script src="{% static 'store/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
