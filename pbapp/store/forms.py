@@ -23,12 +23,23 @@ class Register(forms.Form):
     )
 
 
-class searchProduct(forms.Form):
+class SearchProduct(forms.Form):
     search = forms.CharField(
-        label='search',
         widget=forms.TextInput(attrs={'class':'form-inline'}),
         required=False
     )
+
+
+class LogIn(forms.Form):
+    name = forms.CharField(
+        widget=forms.TextInput(attrs={'class':'form-group', 'placeholder':'name', 'style': 'margin-left: 14px'}),
+        required=True
+    )
+    passwd = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class':'form-group', 'placeholder':'Mot de passe'}),
+        required=True
+    )
+
 
 class ParagraphErrorList(ErrorList):
     def __str__(self):

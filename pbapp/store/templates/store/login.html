@@ -34,12 +34,31 @@
   </section>
 
     {% elif not register %}
-<form id="monForm" action="{% url 'store:login' %}" method="post">
-    {% csrf_token %}
 
-        {{ forml }}
-     <button type="submit" class="btn btn-success">Enregistrer</button>
+<section class="page-section">
+
+<div class="row justify-content-center">
+  <div class="col-md-6 text-center">
+
+    <form id="monForm" action="{% url 'store:login' %}" method="post">
+    {% csrf_token %}
+      {{ forml }}
+    <button type="submit" class="btn btn-success">Enregistrer</button>
 </form>
+</div>
+  <div class="col-md-6 text-center">
+  <form id="" action="{% url 'store:connect' %}" method="post">
+      {% csrf_token %}
+    {{ formlg }}
+      <button type="submit" class="btn btn-success"><i class="fas fa-save">Connecter</i></button>
+  </form>
+</div>
+</div>
+    <div class="row justify-content-center">
+
+    </div>
+</section>
+{% if logEr == True %}<h3 class="text-white mt-0 text-center">Veuillez vérifier vos informations, ou vous enregistrer via le formulaire ci-dessus. Merci.</h3>{% endif %}
     {% endif %}
 </div>
 

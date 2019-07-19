@@ -3,10 +3,11 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from django.contrib.auth import logout
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth import authenticate, login, logout
 
-from .forms import Register, ParagraphErrorList, searchProduct
+
+from .forms import Register, ParagraphErrorList, SearchProduct, LogIn
 from .request_.offs_req import AllRequests
 from .models import ProductsNutriTypeA, Favorite
 
@@ -15,15 +16,15 @@ from .models import ProductsNutriTypeA, Favorite
 
 def index(request):
     """Display index page"""
-    form = searchProduct()
+    form = SearchProduct()
     context = {'form':form}
     print('ici index')
     return render(request, 'store/index.html', context)
 
 
-def login(request):
+def login_(request):
     """display register or login"""
-    form = searchProduct()
+    form = SearchProduct()
     if request.method == 'POST':
         form = Register(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
@@ -33,13 +34,16 @@ def login(request):
             user = User.objects.create_user(username=name, email=emailUser, password=passwd)
             user.save()
             return HttpResponseRedirect('store/index.html')
-    elif request.user is None:
+    elif not request.user.id:
         forml = Register()
+        formlg = LogIn()
         context = {
 
             'forml': forml,
             'register': False,
-            'form': form
+            'formlg': formlg,
+            'form': form,
+            'logEr': False
         }
         return render(request, 'store/login.html', context)
     else:
@@ -55,9 +59,34 @@ def login(request):
         return render(request, 'store/login.html', context)
 
 
+def connect_user(request):
+    if request.method == 'POST':
+        form = LogIn(request.POST, error_class=ParagraphErrorList)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            passwd = form.cleaned_data['passwd']
+            user = authenticate(username=name, password=passwd)
+            if user is None:
+                print('invalid')
+                forml = Register()
+                formlg = LogIn()
+                form = SearchProduct()
+                context = {
+                    'logEr': True,
+                    'forml': forml,
+                    'formlg': formlg,
+                    'form': form
+                }
+                return render(request, 'store/login.html', context)
+            else:
+                print('valid')
+                login(request, user)
+                return HttpResponseRedirect('store/index.html')
+
+
 def search(request):
     """Display the results for the request"""
-    form = searchProduct(request.POST, error_class=ParagraphErrorList)
+    form = SearchProduct(request.POST, error_class=ParagraphErrorList)
     if form.is_valid():
         item = form.cleaned_data['search']
         req = AllRequests()
@@ -68,7 +97,7 @@ def search(request):
         picture = product['image_front_url']
         name = product['product_name']
         aProducts = ProductsNutriTypeA.objects.filter(category=category_)[:33]
-        formi = searchProduct()
+        formi = SearchProduct()
         context = {'product': aProducts,
                    'picture': picture,
                    'name': name,
@@ -81,7 +110,7 @@ def search(request):
 @login_required
 def display_my_products(request):
     """display the favorite"""
-    form = searchProduct
+    form = SearchProduct
     id_user = request.user.id
     user = get_object_or_404(User, pk=id_user)
     products = get_list_or_404(Favorite, id_user=user)
@@ -119,7 +148,7 @@ def add_product_to_favorite(request, id):
 
 def detail(request, id):
     """Display the product detail"""
-    form = searchProduct
+    form = SearchProduct
     product = get_object_or_404(ProductsNutriTypeA, pk=id)
     code = product.code
     req = AllRequests()

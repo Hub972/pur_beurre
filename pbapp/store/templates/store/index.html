@@ -8,8 +8,11 @@
           <h1 class="text-white mt-0">Du gras oui mais de qualité</h1>
           <h2 class="text-white mt-0">Trouvez un produit de substitution <br>pour ceux que vous consommez tous les jours</h2>
           <hr class="divider light my-4">
-         <div> {{ form }}</div>
-          <a class="btn btn-light btn-xl js-scroll-trigger" style="padding-top: 1.25rem;margin-top: -60px;margin-left: 346px;margin-right: -100px;" href="#services">Chercher</a>
+            <form class="form-inline" action="{% url 'store:search' %}" method="post">
+                {% csrf_token %}
+         {{ form }}
+          <button type="submit" class="btn btn-success" style="padding-top: 1.25rem;margin-top: -60px;margin-left: 346px;margin-right: -100px;">Chercher</button>
+            </form>
         </div>
       </div>>
 
@@ -52,7 +55,7 @@
         <div class="col-lg-4 mr-auto text-center">
           <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
           <!-- Make sure to change the email address in anchor text AND the link below! -->
-          <a class="d-block" href="#">contact@yourwebsite.com</a>
+          <div class="text-white-50 mb-4"><p>contact@yourwebsite.com</p></div>
         </div>
       </div>>
 
