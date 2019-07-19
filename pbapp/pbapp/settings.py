@@ -30,7 +30,7 @@ else:
     DEBUG = True
 
 
-ALLOWED_HOSTS = ['tp.purebeurre.herrokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['tppurbeurre.herrokuapp.com', '127.0.0.1']
 
 
 # Application definition
