@@ -131,9 +131,9 @@ def display_my_products(request):
 
 
 @login_required
-def add_product_to_favorite(request, id):
+def add_product_to_favorite(request, product_id):
     """Add product to favorite"""
-    product = get_object_or_404(ProductsNutriTypeA, pk=id)
+    product = get_object_or_404(ProductsNutriTypeA, pk=product_id)
     id_user = request.user.id
     user = get_object_or_404(User, pk=id_user)
     name = product.product_name
@@ -143,7 +143,9 @@ def add_product_to_favorite(request, id):
         prd = Favorite(name=name, generic_name=name, categorie=category, nutriscore='a', picture=picture,
                        id_user=user)
         prd.save()
-    return render(request, 'store/index.html')
+    form = SearchProduct()
+    context = {'form': form}
+    return render(request, 'store/index.html', context)
 
 
 def detail(request, id):
