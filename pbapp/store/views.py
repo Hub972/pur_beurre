@@ -60,6 +60,7 @@ def login_(request):
 
 
 def connect_user(request):
+    """Connect the users"""
     if request.method == 'POST':
         form = LogIn(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():

@@ -19,3 +19,8 @@ class ProductsNutriTypeA(models.Model):
     picture = models.CharField(max_length=500, default="00")
     category = models.CharField(max_length=200, default="00")
 
+
+class PictureUser(models.Model):
+    picture = models.ImageField()
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+

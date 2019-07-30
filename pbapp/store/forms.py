@@ -25,6 +25,7 @@ class Register(forms.Form):
 
 class SearchProduct(forms.Form):
     search = forms.CharField(
+        max_length=100,
         widget=forms.TextInput(attrs={'class':'form-inline'}),
         required=False
     )
