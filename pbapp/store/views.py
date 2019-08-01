@@ -9,20 +9,30 @@ from django.contrib.auth import authenticate, login, logout
 
 from .forms import Register, ParagraphErrorList, SearchProduct, LogIn
 from .request_.offs_req import AllRequests
-from .models import ProductsNutriTypeA, Favorite
+from .models import ProductsNutriTypeA, Favorite, PictureUser
 
 # Create your views here.
 
 
 def index(request):
     """Display index page"""
-    form = SearchProduct()
-    context = {'form':form}
-    print('ici index')
-    return render(request, 'store/index.html', context)
+    user = request.user.id
+    if user:
+        form = SearchProduct()
+        context = {
+            'form': form,
+            'user': True
+        }
+        print('ici index')
+        return render(request, 'store/index.html', context)
+    else:
+        form = SearchProduct()
+        context = {'form':form, 'user': False}
+        print('ici index')
+        return render(request, 'store/index.html', context)
 
 
-def login_(request):
+def register_(request):
     """display register or login"""
     form = SearchProduct()
     if request.method == 'POST':
@@ -34,29 +44,40 @@ def login_(request):
             user = User.objects.create_user(username=name, email=emailUser, password=passwd)
             user.save()
             return HttpResponseRedirect('store/index.html')
-    elif not request.user.id:
-        forml = Register()
-        formlg = LogIn()
-        context = {
-
-            'forml': forml,
-            'register': False,
-            'formlg': formlg,
-            'form': form,
-            'logEr': False
-        }
-        return render(request, 'store/login.html', context)
     else:
-        user = request.user.id
-        detUser = get_object_or_404(User, pk=user)
-        name = detUser.username
-        mail = detUser.email
-        context = { 'user': name,
-                    'mail': mail,
-                    'register': True,
-                    'form': form
-                    }
-        return render(request, 'store/login.html', context)
+        forml = Register()
+        context = {
+            'forml': forml,
+            'form': form,
+        }
+        return render(request, 'store/register_user.html', context)
+
+
+def login_(request):
+    form = SearchProduct()
+    formlg = LogIn()
+    context = {'formlg': formlg,
+               'form': form}
+    return render(request, 'store/login.html', context)
+
+
+def my_count(request):
+    form = SearchProduct()
+    user = request.user.id
+    try:
+        picture = PictureUser.objects.get(id_user=user)
+    except Exception:
+        picture = ";-)"
+
+    detUser = get_object_or_404(User, pk=user)
+    name = detUser.username
+    mail = detUser.email
+    context = {'name': name,
+               'mail': mail,
+               'form': form,
+               'picture': picture
+               }
+    return render(request, 'store/my_count.html', context)
 
 
 def connect_user(request):
@@ -68,11 +89,11 @@ def connect_user(request):
             passwd = form.cleaned_data['passwd']
             user = authenticate(username=name, password=passwd)
             if user is None:
-                print('invalid')
                 forml = Register()
                 formlg = LogIn()
                 form = SearchProduct()
                 context = {
+                    'user': False,
                     'logEr': True,
                     'forml': forml,
                     'formlg': formlg,
@@ -80,19 +101,31 @@ def connect_user(request):
                 }
                 return render(request, 'store/login.html', context)
             else:
-                print('valid')
                 login(request, user)
                 return HttpResponseRedirect('store/index.html')
 
 
 def search(request):
     """Display the results for the request"""
+    user = request.user.id
+    if user:
+        user = True
+    else:
+        user = False
     form = SearchProduct(request.POST, error_class=ParagraphErrorList)
     if form.is_valid():
         item = form.cleaned_data['search']
         req = AllRequests()
         prd = req.search_product_item(item)
+
         product = prd.json()
+        if not product['products']:
+            context = {
+                'user': user,
+                'form': form,
+                'badSearch': True
+            }
+            return render(request, 'store/index.html', context)
         product = product['products'][0]
         category_ = product['pnns_groups_2']
         picture = product['image_front_url']
@@ -102,7 +135,8 @@ def search(request):
         context = {'product': aProducts,
                    'picture': picture,
                    'name': name,
-                   'form': formi
+                   'form': formi,
+                   'user': user
                    }
         print('ici search')
         return render(request, 'store/result.html', context)
@@ -126,7 +160,8 @@ def display_my_products(request):
     for p in products:
         print(p.name)
     context = {'products': pProducts,
-               'form': form
+               'form': form,
+               'user': True
                }
     return render(request, 'store/show_products.html', context)
 
@@ -145,12 +180,17 @@ def add_product_to_favorite(request, product_id):
                        id_user=user)
         prd.save()
     form = SearchProduct()
-    context = {'form': form}
+    context = {'form': form, 'user': True}
     return render(request, 'store/index.html', context)
 
 
 def detail(request, id):
     """Display the product detail"""
+    user = request.user.id
+    if user:
+        user = True
+    else:
+        user = False
     form = SearchProduct
     product = get_object_or_404(ProductsNutriTypeA, pk=id)
     code = product.code
@@ -175,7 +215,8 @@ def detail(request, id):
         'code': code,
         'name': name,
         'form': form,
-        'picture': picturePrd
+        'picture': picturePrd,
+        'user': user
     }
     print('ok tonton')
     return render(request, 'store/detail.html', context)

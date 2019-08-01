@@ -11,7 +11,11 @@
             <form class="form-inline" action="{% url 'store:search' %}" method="post">
                 {% csrf_token %}
          {{ form }}
-          <button type="submit" class="btn btn-success" style="padding-top: 1.25rem;margin-top: -60px;margin-left: 346px;margin-right: -100px;">Chercher</button>
+          <button type="submit" class="btn btn-success" style="padding-top: 0.25rem;margin-top: -36px;margin-left: 346px;margin-right: -100px;">Chercher</button>
+                {% if badSearch == True %}
+                    <h2 class="mt-0" style="color:red;">Le produit que vous recherchez n'existe pas.</h2>
+                {% endif %}
+
             </form>
         </div>
       </div>>
@@ -20,7 +24,7 @@
       </div>
     </div>
   </section>
- <section class="page-section bg-primary" >
+ <section class="page-section" >
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
@@ -42,7 +46,7 @@
         <div class="col-lg-8 text-center">
 <h2 class="text-white mt-0 text-center" style="margin-left: -12px;">Contactez-nous</h2>
 <hr class="divider my-4" style="border-left-width: 3.2rem;border-left-style: solid;margin-left: 308.167px;">
-          <p class="text-white-50 mb-4 text-center">La maison est grande ouverte.</p>
+          <p class="mb-4 text-center" style="color:green;">La maison est grande ouverte.</p>
         </div>
       </div>
 
@@ -50,12 +54,12 @@
       <div class="row" style="margin-left: 20px;">
         <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
           <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
-          <div class="text-white-50 mb-4"><p>+1 (202) 555-0149</p></div>
+          <div class="text-white-50 mb-4"><p style="color:orange;">+1 (202) 555-0149</p></div>
         </div>
         <div class="col-lg-4 mr-auto text-center">
           <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
           <!-- Make sure to change the email address in anchor text AND the link below! -->
-          <div class="text-white-50 mb-4"><p>contact@yourwebsite.com</p></div>
+          <div class="text-white-50 mb-4"><a href="mailto:contact@yourwebsite.com"><p style="color:orange;">contact@yourwebsite.com</p></a> </div>
         </div>
       </div>>
 

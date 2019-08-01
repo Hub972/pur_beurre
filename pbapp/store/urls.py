@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.conf.urls import url
 
 from . import views
 
@@ -12,5 +12,7 @@ urlpatterns = [
     url(r'^index/$', views.index, name='index'),
     url(r'^detail/(?P<id>[0-9]+)/$', views.detail, name='detail'),
     url(r'^log_out/$', views.log_out, name='logOut'),
-    url(r'connection/$', views.connect_user, name='connect')
+    url(r'connection/$', views.connect_user, name='connect'),
+    url(r'^my_count/$', views.my_count, name='my_count'),
+    url(r'^user_register', views.register_, name='register')
 ]

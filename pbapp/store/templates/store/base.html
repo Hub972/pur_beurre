@@ -31,7 +31,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-      <img src="{% static 'store/img/biscuit1.png' %}" alt="iône biscuit" ><a class="navbar-brand js-scroll-trigger" href="{% url 'store:index' %}">Pur beurre</a>
+      <img src="{% static 'store/img/biscuit1.png' %}" alt="iône biscuit" ><a class="navbar-brand js-scroll-trigger" href="{% url 'store:index' %}">&nbsp;Pur beurre</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -43,11 +43,16 @@
            <!-- <input id="inputForm"  type="text" name="texte" style="color : black;"> -->
                 {{ form }}
 
-          <button id="envoi" class="nav-link js-scroll-trigger">Chercher</button>
+          <button id="envoi" class="nav-link js-scroll-trigger" style="padding-top: 5px;padding-bottom: 5px;"><span style="color:black;">Chercher</span> </button>
             </form>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{% url 'store:login' %}" ><i class="fas fa-user fa-2x"></i></a>
+            {% if user == True %}
+            <a class="nav-link js-scroll-trigger" href="{% url 'store:my_count' %}" ><i class="fas fa-user fa-2x"></i></a>
+            {% elif user == False %}
+            <a class="nav-link js-scroll-trigger" href="{% url 'store:login' %}" ><i class="fas fa-user fa-2x"></i>&nbsp;Se connecter</a>
+            {% endif %}
+
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="{% url 'store:show' %}"><i class="fas fa-carrot fa-2x"></i></a>
