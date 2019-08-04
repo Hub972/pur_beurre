@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include, url
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 from store import views
@@ -25,4 +27,4 @@ urlpatterns = [
     url('store/', include('store.urls', namespace='store')),
     url('', views.index)
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

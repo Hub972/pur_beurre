@@ -1,4 +1,5 @@
 venv/
+env/
 pur_beurre/__pycache__
 store/__pycache__/
 store/migrations/__pycache__/
