@@ -21,11 +21,11 @@
 </div>
 {% for prd in product %}
 
-        <div class="col-md-4">
-            <div>
+        <div class="col-md-4" id="result">
+
             <a href="{% url 'store:detail' id=prd.id %}"><em>Voir produit</em> </a>
-            </div>
-              <img class="img-responsive" src="{{ prd.picture }}" alt="{{ prd.product_name }}" width="250" height="300">
+
+              <img class="img-responsive" src="{{ prd.picture }}" alt="{{ prd.product_name }}" width="auto" height="300">
 
             <h3><a href="{% url 'store:add' product_id=prd.id %}"><i class="fas fa-save"></i>{{ prd.product_name }}</a></h3>
         </div>

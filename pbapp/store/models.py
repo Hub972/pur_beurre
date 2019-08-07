@@ -21,6 +21,6 @@ class ProductsNutriTypeA(models.Model):
 
 
 class PictureUser(models.Model):
-    picture = models.ImageField()
+    name = models.CharField(max_length=600, null=True)
     id_user = models.ForeignKey(User, on_delete=models.CASCADE)
 

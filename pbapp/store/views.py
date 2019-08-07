@@ -23,12 +23,10 @@ def index(request):
             'form': form,
             'user': True
         }
-        print('ici index')
         return render(request, 'store/index.html', context)
     else:
         form = SearchProduct()
         context = {'form':form, 'user': False}
-        print('ici index')
         return render(request, 'store/index.html', context)
 
 
@@ -36,14 +34,16 @@ def register_(request):
     """display register or login"""
     form = SearchProduct()
     if request.method == 'POST':
-        form = Register(request.POST, error_class=ParagraphErrorList)
-        if form.is_valid():
+        formr = Register(request.POST, error_class=ParagraphErrorList)
+        if formr.is_valid():
             name = form.cleaned_data['name']
             emailUser = form.cleaned_data['email']
             passwd = form.cleaned_data['passwd']
             user = User.objects.create_user(username=name, email=emailUser, password=passwd)
             user.save()
-            return HttpResponseRedirect('store/index.html')
+            context = {
+                'form': form}
+            return render(request, 'store/thanks.html', context)
     else:
         forml = Register()
         context = {
@@ -75,9 +75,9 @@ def my_count(request):
     context = {'name': name,
                'mail': mail,
                'form': form,
-               'picture': picture
+               'picture': picture.name
                }
-    return render(request, 'store/my_count.html', context)
+    return render(request, 'store/my_place.html', context)
 
 
 def connect_user(request):
@@ -138,7 +138,6 @@ def search(request):
                    'form': formi,
                    'user': user
                    }
-        print('ici search')
         return render(request, 'store/result.html', context)
 
 
@@ -218,7 +217,6 @@ def detail(request, id):
         'picture': picturePrd,
         'user': user
     }
-    print('ok tonton')
     return render(request, 'store/detail.html', context)
 
 

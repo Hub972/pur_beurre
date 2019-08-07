@@ -25,3 +25,12 @@
    height:200px; /* A toi de donner la bonne hauteur */
    margin-left:356px; /* -largeur/2 */
    margin-top:343px; /* -hauteur/2 */
+}#result {
+background-color:#E4EFFF;
+border:1px solid #9FC6FF;
+padding:5px;
+/*arrondir les coins en haut à gauche et en bas à droite*/
+-moz-border-radius:10px 0;
+-webkit-border-radius:10px 0;
+border-radius:10px 0;
+}

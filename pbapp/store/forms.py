@@ -5,16 +5,19 @@ from django.forms.utils import ErrorList
 
 class Register(forms.Form):
     name = forms.CharField(
+        label="",
         max_length=50,
         widget=forms.TextInput(attrs={'class':'form-group', 'placeholder':'Nom'}),
         required=True,
 
     )
     email = forms.EmailField(
+        label="",
         widget=forms.EmailInput(attrs={'class':'form-group', 'placeholder':'Email'}),
         required=True
     )
     passwd = forms.CharField(
+        label="",
         widget=forms.PasswordInput(attrs={'class':'form-group', 'placeholder':'Mot de passe'}),
         required=True
     )
@@ -22,6 +25,7 @@ class Register(forms.Form):
 
 class SearchProduct(forms.Form):
     search = forms.CharField(
+        label="",
         max_length=100,
         widget=forms.TextInput(attrs={'class':'form-inline'}),
         required=False
@@ -30,10 +34,12 @@ class SearchProduct(forms.Form):
 
 class LogIn(forms.Form):
     name = forms.CharField(
+        label="",
         widget=forms.TextInput(attrs={'class':'form-group', 'placeholder': 'nom'}),
         required=True
     )
     passwd = forms.CharField(
+        label="",
         widget=forms.PasswordInput(attrs={'class':'form-group', 'placeholder': 'Mot de passe'}),
         required=True
     )
