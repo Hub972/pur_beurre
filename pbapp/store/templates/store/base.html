@@ -38,8 +38,8 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <li class="nav-item">
-            <form class="form-inline" action="{% url 'store:search' %}" method="post">
-                {% csrf_token %}
+            <form class="form-inline" action="{% url 'store:search' %}" method="get">
+
            <!-- <input id="inputForm"  type="text" name="texte" style="color : black;"> -->
                 {{ form }}
 
@@ -51,6 +51,8 @@
             <a class="nav-link js-scroll-trigger" href="{% url 'store:my_count' %}" ><i class="fas fa-user fa-2x"></i></a>
             {% elif user == False %}
             <a class="nav-link js-scroll-trigger" href="{% url 'store:login' %}" ><i class="fas fa-user fa-2x"></i>&nbsp;Se connecter</a>
+            {% elif welcome == True %}
+            <a class="nav-link js-scroll-trigger" href="{% url 'store:my_count' %}" ><i class="fas fa-user fa-2x"></i>&nbsp;Bienvenue</a>
             {% endif %}
 
           </li>

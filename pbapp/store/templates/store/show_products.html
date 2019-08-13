@@ -16,9 +16,9 @@
 
     {% for prd in products %}
 
-            <div class="col-md-4">
-            <a>
-              <img class="img-responsive" src="{{ prd.picture }}" alt="{{ prd.name }}" width="250" height="300">
+            <div class="col-md-4 result">
+            <a href="{% url 'store:detail' id=prd.id %}">
+              <img class="img-responsive" src="{{ prd.picture }}" alt="{{ prd.name }}" width="auto" height="300">
             </a>
             <h3><a>{{ prd.name }}</a></h3>
         </div>
@@ -30,14 +30,16 @@
   <div class="clearfix"></div>
   <nav aria-label="">
     <ul class="pager">
+        <div class="row">
       {% if products.has_previous %}
-          <li><a href="?page={{ products.previous_page_number }}">Précédent</a></li>
+        <div class="col-md-6 text-center"><li class="col-md-6"><a href="?page={{ products.previous_page_number }}">Précédent</a></li></div>
       {% endif %}
       {% if products.has_next %}
-          <li><a href="?page={{ products.next_page_number }}">Suivant</a></li>
-      {% endif %}
+        <div class="col-md-6 text-center"><li><a href="?page={{ products.next_page_number }}">Suivant</a></li></div>
+      {% endif %}</div>
     </ul>
   </nav>
 </div>
+<section><p> <br><br></p></section>
 
 {% endblock %}

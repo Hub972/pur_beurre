@@ -8,8 +8,8 @@
           <h1 class="text-white mt-0">Du gras oui mais de qualité</h1>
           <h2 class="text-white mt-0">Trouvez un produit de substitution <br>pour ceux que vous consommez tous les jours</h2>
           <hr class="divider light my-4">
-            <form class="form-inline" action="{% url 'store:search' %}" method="post">
-                {% csrf_token %}
+            <form class="form-inline" action="{% url 'store:search' %}" method="get">
+
          {{ form }}
           <button type="submit" class="btn btn-success" style="padding-top: 0.25rem;margin-top: -36px;margin-left: 346px;margin-right: -100px;">Chercher</button>
                 {% if badSearch == True %}

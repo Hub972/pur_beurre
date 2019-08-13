@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth import authenticate, login, logout
-
+import random
 
 from .forms import Register, ParagraphErrorList, SearchProduct, LogIn
 from .request_.offs_req import AllRequests
@@ -54,6 +54,7 @@ def register_(request):
 
 
 def login_(request):
+    """log form"""
     form = SearchProduct()
     formlg = LogIn()
     context = {'formlg': formlg,
@@ -62,6 +63,7 @@ def login_(request):
 
 
 def my_count(request):
+    """account page"""
     form = SearchProduct()
     user = request.user.id
     try:
@@ -102,7 +104,7 @@ def connect_user(request):
                 return render(request, 'store/login.html', context)
             else:
                 login(request, user)
-                return HttpResponseRedirect('store/index.html')
+                return render(request, 'store/index.html', context={"welcome": True})
 
 
 def search(request):
@@ -114,31 +116,43 @@ def search(request):
         user = False
     form = SearchProduct(request.POST, error_class=ParagraphErrorList)
     if form.is_valid():
-        item = form.cleaned_data['search']
-        req = AllRequests()
-        prd = req.search_product_item(item)
-
-        product = prd.json()
-        if not product['products']:
-            context = {
-                'user': user,
-                'form': form,
-                'badSearch': True
-            }
-            return render(request, 'store/index.html', context)
-        product = product['products'][0]
-        category_ = product['pnns_groups_2']
-        picture = product['image_front_url']
-        name = product['product_name']
-        aProducts = ProductsNutriTypeA.objects.filter(category=category_)[:33]
-        formi = SearchProduct()
-        context = {'product': aProducts,
-                   'picture': picture,
-                   'name': name,
-                   'form': formi,
-                   'user': user
-                   }
-        return render(request, 'store/result.html', context)
+            item = request.GET['search']
+            req = AllRequests()
+            prd = req.search_product_item(item)
+            print(item)
+            product = prd.json()
+            if not product['products']:
+                context = {
+                    'user': user,
+                    'form': form,
+                    'badSearch': True
+                }
+                return render(request, 'store/result.html', context)
+            product = product['products'][0]
+            category_ = product['pnns_groups_2']
+            picture = product['image_front_url']
+            name = product['product_name']
+            aProducts = ProductsNutriTypeA.objects.filter(category=category_)
+            aProductl = []
+            for prd in aProducts:
+                aProductl.append(prd)
+            paginator = Paginator(aProductl, 9)
+            page = request.GET.get('page')
+            try:
+                pProducts = paginator.get_page(page)
+            except PageNotAnInteger:
+                pProducts = paginator.get_page(1)
+            except EmptyPage:
+                pProducts = paginator.get_page(paginator.num_pages)
+            formi = SearchProduct()
+            context = {'product': pProducts,
+                       'picture': picture,
+                       'name': name,
+                       'form': formi,
+                       'user': user,
+                       'item': item
+                       }
+            return render(request, 'store/result.html', context)
 
 
 @login_required
@@ -148,7 +162,11 @@ def display_my_products(request):
     id_user = request.user.id
     user = get_object_or_404(User, pk=id_user)
     products = get_list_or_404(Favorite, id_user=user)
-    paginator = Paginator(products, 9)
+    favorite = []
+    for prd in products:
+        bdPrd = get_object_or_404(ProductsNutriTypeA, picture=prd.picture)
+        favorite.append(bdPrd)
+    paginator = Paginator(favorite, 9)
     page = request.GET.get('page')
     try:
         pProducts = paginator.get_page(page)
@@ -156,8 +174,6 @@ def display_my_products(request):
         pProducts = paginator.get_page(1)
     except EmptyPage:
         pProducts = paginator.get_page(paginator.num_pages)
-    for p in products:
-        print(p.name)
     context = {'products': pProducts,
                'form': form,
                'user': True

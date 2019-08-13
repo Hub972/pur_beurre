@@ -37,14 +37,30 @@ class LoginTestDetailCase(TestCase):
 
 
 class DisplayResultProductSearch(TestCase):
-    def setUp(self):
-        self.productsBadItem = ProductsNutriTypeA.objects.filter(category="blal")
-        self.productEmptyItem = ProductsNutriTypeA.objects.filter(category='')
-        self.productsGoodItem = ProductsNutriTypeA.objects.filter(category='Meat')
 
-    def test_result_return_200(self):
-        response = self.client.post(reverse('store:search'))
-        self.assertEqual(response.status_code, 200)
+    def setUp(self):
+        self.code = [122334, 544344, 766544]
+        self.product_name = ['jus de pomme', 'riz bio']
+        self.picture = ['jus.png', 'riz.png']
+        self.category = ['beverage', 'cereal']
+        for c in self.code:
+            for pr in self.product_name:
+                for pi in self.picture:
+                    for ct in self.category:
+                        u = ProductsNutriTypeA.objects.create(code=c, product_name=pr, picture=pi, category=ct)
+                        u.save()
+        self.productsBadItem = ProductsNutriTypeA.objects.filter(category="blal")
+        self.productsGoodItem = ProductsNutriTypeA.objects.filter(category='beverage')
+
+    def test_good_search(self):
+        self.assertTrue(self.productsGoodItem)
+
+    def test_bad_search(self):
+        self.assertFalse(self.productsBadItem)
+
+    """def test_result_return_200(self):
+        response = self.client.get(reverse('store:search'))
+        #self.assertEqual(response.status_code, 200)
 
     def test_result_return_bad(self):
         response = self.client.post(reverse('store:search'))
@@ -52,10 +68,10 @@ class DisplayResultProductSearch(TestCase):
 
     def test_result_return_good(self):
         response = self.client.post(reverse('store:search'))
-        self.assertNotEquals(self.productsGoodItem, self.productsBadItem)
+        self.assertNotEquals(self.productsGoodItem, self.productsBadItem)"""
 
 
-class AddProductToFavorite(TestCase):
+class AddAndReadProductToFavorite(TestCase):
     def setUp(self):
         self.contact = User.objects.create_user(username="polo", email="polo@mail.com")
         self.prd = Favorite(name='eau', generic_name='eau', categorie='water', nutriscore='a', picture='picture', id_user=self.contact)
@@ -76,7 +92,7 @@ class MockCase(TestCase):
         {"nutrition_score_beverage": 0, "allergens": "NOISETTES, LAIT, LACTOSÉRUM, SOJA",
          "brands_tags": ["ferrero", "nutella"], "unique_scans_n": 727, "additives_n": 1, "product_name": "Nutella",
          "data_sources": "Database - FoodRepo / openfood.ch, Databases, Producer - Ferrero, Producers, App - yuka, Apps",
-         "no_nutrition_data": "", "selected_images": {"front": {
+         "no_nutrition_data": "", 'pnns_groups_2':'sweet', "selected_images": {"front": {
             "display": {"fr": "https://static.openfoodfacts.org/images/products/301/762/042/2003/front_fr.139.400.jpg"},
             "thumb": {"fr": "https://static.openfoodfacts.org/images/products/301/762/042/2003/front_fr.139.100.jpg"},
             "small": {"fr": "https://static.openfoodfacts.org/images/products/301/762/042/2003/front_fr.139.200.jpg"}}}}]})

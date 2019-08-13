@@ -21,7 +21,7 @@
 </div>
 {% for prd in product %}
 
-        <div class="col-md-4" id="result">
+        <div class="col-md-4 result" >
 
             <a href="{% url 'store:detail' id=prd.id %}"><em>Voir produit</em> </a>
 
@@ -31,19 +31,26 @@
         </div>
         {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
 
+
 {% endfor %}
 <div class="pagination">
   <div class="clearfix"></div>
   <nav aria-label="">
     <ul class="pager">
+        <div class="row">
       {% if product.has_previous %}
-          <li><a href="?page={{ product.previous_page_number }}">Précédent</a></li>
+        <div class="col-md-6 text-center"><li class="col-md-6"><a href="?search={{ item }}&page={{ product.previous_page_number }}">Précédent</a></li></div>
       {% endif %}
       {% if product.has_next %}
-          <li><a href="?page={{ product.next_page_number }}">Suivant</a></li>
-      {% endif %}
+        <div class="col-md-6 text-center"><li><a href="?search={{ item }}&page={{ product.next_page_number }}">Suivant</a></li></div>
+      {% endif %}</div>
     </ul>
   </nav>
 </div>
+<section><p> <br><br></p></section>
+
+
+
+
 
 {% endblock %}

@@ -25,7 +25,7 @@
    height:200px; /* A toi de donner la bonne hauteur */
    margin-left:356px; /* -largeur/2 */
    margin-top:343px; /* -hauteur/2 */
-}#result {
+}.result {
 background-color:#E4EFFF;
 border:1px solid #9FC6FF;
 padding:5px;
