@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-#$ heroku config:set DISABLE_COLLECTSTATIC=1
+
 import os
 import dj_database_url
 import django_heroku
@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'pbapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql', # on utilise l'adaptateur postgresql
-        'NAME': 'openfoodfacts', # le nom de notre base de donnees creee precedemment
-        'USER': 'stud', # attention : remplacez par votre nom d'utilisateur
+        'ENGINE': 'django.db.backends.postgresql',# on utilise l'adaptateur postgresql
+        'NAME': 'openfoodfacts',# le nom de notre base de donnees creee precedemment
+        'USER': 'stud',# attention : remplacez par votre nom d'utilisateur
         'PASSWORD': 'Honneur',
         'HOST': '',
         'PORT': '5432',

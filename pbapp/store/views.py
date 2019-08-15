@@ -11,6 +11,7 @@ from .forms import Register, ParagraphErrorList, SearchProduct, LogIn
 from .request_.offs_req import AllRequests
 from .models import ProductsNutriTypeA, Favorite, PictureUser
 
+
 # Create your views here.
 
 
@@ -26,19 +27,19 @@ def index(request):
         return render(request, 'store/index.html', context)
     else:
         form = SearchProduct()
-        context = {'form':form, 'user': False}
+        context = {'form': form, 'user': False}
         return render(request, 'store/index.html', context)
 
 
 def register_(request):
-    """display register or login"""
+    """display register page"""
     form = SearchProduct()
     if request.method == 'POST':
         formr = Register(request.POST, error_class=ParagraphErrorList)
         if formr.is_valid():
-            name = form.cleaned_data['name']
-            emailUser = form.cleaned_data['email']
-            passwd = form.cleaned_data['passwd']
+            name = formr.cleaned_data['name']
+            emailUser = formr.cleaned_data['email']
+            passwd = formr.cleaned_data['passwd']
             user = User.objects.create_user(username=name, email=emailUser, password=passwd)
             user.save()
             context = {
@@ -68,6 +69,7 @@ def my_count(request):
     user = request.user.id
     try:
         picture = PictureUser.objects.get(id_user=user)
+        picture = picture.name
     except Exception:
         picture = ";-)"
 
@@ -77,7 +79,7 @@ def my_count(request):
     context = {'name': name,
                'mail': mail,
                'form': form,
-               'picture': picture.name
+               'picture': picture
                }
     return render(request, 'store/my_place.html', context)
 
@@ -104,7 +106,12 @@ def connect_user(request):
                 return render(request, 'store/login.html', context)
             else:
                 login(request, user)
-                return render(request, 'store/index.html', context={"welcome": True})
+                form = SearchProduct()
+                context = {
+                    "welcome": True,
+                    "form": form
+                }
+                return render(request, 'store/index.html', context)
 
 
 def search(request):
@@ -116,43 +123,43 @@ def search(request):
         user = False
     form = SearchProduct(request.POST, error_class=ParagraphErrorList)
     if form.is_valid():
-            item = request.GET['search']
-            req = AllRequests()
-            prd = req.search_product_item(item)
-            print(item)
-            product = prd.json()
-            if not product['products']:
-                context = {
-                    'user': user,
-                    'form': form,
-                    'badSearch': True
-                }
-                return render(request, 'store/result.html', context)
-            product = product['products'][0]
-            category_ = product['pnns_groups_2']
-            picture = product['image_front_url']
-            name = product['product_name']
-            aProducts = ProductsNutriTypeA.objects.filter(category=category_)
-            aProductl = []
-            for prd in aProducts:
-                aProductl.append(prd)
-            paginator = Paginator(aProductl, 9)
-            page = request.GET.get('page')
-            try:
-                pProducts = paginator.get_page(page)
-            except PageNotAnInteger:
-                pProducts = paginator.get_page(1)
-            except EmptyPage:
-                pProducts = paginator.get_page(paginator.num_pages)
-            formi = SearchProduct()
-            context = {'product': pProducts,
-                       'picture': picture,
-                       'name': name,
-                       'form': formi,
-                       'user': user,
-                       'item': item
-                       }
+        item = request.GET['search']
+        req = AllRequests()
+        prd = req.search_product_item(item)
+        print(item)
+        product = prd.json()
+        if not product['products']:
+            context = {
+                'user': user,
+                'form': form,
+                'badSearch': True
+            }
             return render(request, 'store/result.html', context)
+        product = product['products'][0]
+        category_ = product['pnns_groups_2']
+        picture = product['image_front_url']
+        name = product['product_name']
+        aProducts = ProductsNutriTypeA.objects.filter(category=category_)
+        aProductl = []
+        for prd in aProducts:
+            aProductl.append(prd)
+        paginator = Paginator(aProductl, 9)
+        page = request.GET.get('page')
+        try:
+            pProducts = paginator.get_page(page)
+        except PageNotAnInteger:
+            pProducts = paginator.get_page(1)
+        except EmptyPage:
+            pProducts = paginator.get_page(paginator.num_pages)
+        formi = SearchProduct()
+        context = {'product': pProducts,
+                   'picture': picture,
+                   'name': name,
+                   'form': formi,
+                   'user': user,
+                   'item': item
+                   }
+        return render(request, 'store/result.html', context)
 
 
 @login_required
@@ -242,4 +249,7 @@ def log_out(request):
     return HttpResponseRedirect('store/index.html')
 
 
-
+def terms(request):
+    """Display the terms of use"""
+    form = SearchProduct
+    return render(request, 'store/terms.html', context={'form': form})

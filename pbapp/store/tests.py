@@ -74,7 +74,8 @@ class DisplayResultProductSearch(TestCase):
 class AddAndReadProductToFavorite(TestCase):
     def setUp(self):
         self.contact = User.objects.create_user(username="polo", email="polo@mail.com")
-        self.prd = Favorite(name='eau', generic_name='eau', categorie='water', nutriscore='a', picture='picture', id_user=self.contact)
+        self.prd = Favorite(
+            name='eau', generic_name='eau', categorie='water', nutriscore='a', picture='picture', id_user=self.contact)
         self.prd.save()
 
     def test_return_302(self):
@@ -91,11 +92,13 @@ class MockCase(TestCase):
     RESULT = json.dumps({"page_size": "20", "count": 204, "products": [
         {"nutrition_score_beverage": 0, "allergens": "NOISETTES, LAIT, LACTOSÉRUM, SOJA",
          "brands_tags": ["ferrero", "nutella"], "unique_scans_n": 727, "additives_n": 1, "product_name": "Nutella",
-         "data_sources": "Database - FoodRepo / openfood.ch, Databases, Producer - Ferrero, Producers, App - yuka, Apps",
+         "data_sources": "Database - FoodRepo / openfood.ch, Databases, Producer - Ferrero, Producers,"
+                         " App - yuka, Apps",
          "no_nutrition_data": "", 'pnns_groups_2':'sweet', "selected_images": {"front": {
             "display": {"fr": "https://static.openfoodfacts.org/images/products/301/762/042/2003/front_fr.139.400.jpg"},
             "thumb": {"fr": "https://static.openfoodfacts.org/images/products/301/762/042/2003/front_fr.139.100.jpg"},
-            "small": {"fr": "https://static.openfoodfacts.org/images/products/301/762/042/2003/front_fr.139.200.jpg"}}}}]})
+            "small": {
+                "fr": "https://static.openfoodfacts.org/images/products/301/762/042/2003/front_fr.139.200.jpg"}}}}]})
 
     @patch('store.request_.offs_req.AllRequests.search_product_item', return_value=RESULT)
     def test_offs_item_return(self, *args, **kwargs):
@@ -114,3 +117,9 @@ class MockCase(TestCase):
         req = AllRequests.search_product_item('hsfsgg')
         req = json.loads(req)
         self.assertEqual(req['count'], 0)
+
+
+class TermsPageTestCase(TestCase):
+    def test_index_page(self):
+        response = self.client.get(reverse('store:terms'))
+        self.assertEqual(response.status_code, 200)
