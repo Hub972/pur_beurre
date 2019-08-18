@@ -1,6 +1,12 @@
 {% extends 'store/base.html' %}
 {% block content %}
 {% load static %}
+{% if productAdd == True %}
+                   <p><br><br></p>
+                    <div class="container">
+                        <h2 class="mt-0" style="color:green;">Le produit {{name}} a bien été rajouté a vos favorits.</h2>
+                    </div>
+{% endif %}
   <section class="page-section" name="pr-sect">
     <div class="container">
        <div class="row justify-content-center" style="margin-left: 144px;">

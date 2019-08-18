@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404, render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -42,7 +42,9 @@ def register_(request):
             passwd = formr.cleaned_data['passwd']
             user = User.objects.create_user(username=name, email=emailUser, password=passwd)
             user.save()
+            formlg = LogIn()
             context = {
+                'formlg': formlg,
                 'form': form}
             return render(request, 'store/thanks.html', context)
     else:
@@ -202,7 +204,11 @@ def add_product_to_favorite(request, product_id):
                        id_user=user)
         prd.save()
     form = SearchProduct()
-    context = {'form': form, 'user': True}
+    context = {'form': form,
+               'user': True,
+               'name': name,
+               'productAdd': True
+               }
     return render(request, 'store/index.html', context)
 
 
