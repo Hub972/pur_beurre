@@ -120,7 +120,8 @@ class AddAndReadProductToFavorite(TestCase):
     def setUp(self):
         self.contact = User.objects.create_user(username="polo", email="polo@mail.com")
         self.prd = Favorite(
-            name='confiture bio', generic_name='confiture bio', categorie='sweet', nutriscore='a', picture='confiture.png', id_user=self.contact)
+            name='confiture bio', generic_name='confiture bio', categorie='sweet', nutriscore='a',
+            picture='confiture.png', id_user=self.contact)
         self.prd.save()
 
     def test_show_product(self):
