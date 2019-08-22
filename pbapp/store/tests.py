@@ -71,7 +71,8 @@ class MockCase(TestCase):
         self.picture = ['jus.png', 'confiture.png']
         self.category = ['beverage', 'sweet']
         for i, j in enumerate(self.code):
-            u = ProductsNutriTypeA.objects.create(code=j, product_name=self.product_name[i], picture=self.picture[i], category=self.category[i])
+            u = ProductsNutriTypeA.objects.create(code=j, product_name=self.product_name[i], picture=self.picture[i],
+                                                  category=self.category[i])
             u.save()
         self.productsBadItem = ProductsNutriTypeA.objects.filter(category="blal")
         self.productsGoodItem = ProductsNutriTypeA.objects.filter(category='sweet')[0]
