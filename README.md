@@ -2,8 +2,11 @@
 This project was made for openclassrooms for the purpose of python application developer training.
 
 It has been requested to set up a computer system that allows:
+
 • In a click to find a substitute
+
 • To create an account
+
 • Add the desired products to your favorites
 
 This project was realized using django version 2.2.2.
