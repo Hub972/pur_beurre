@@ -4,11 +4,11 @@
 <section class="page-section">
 
     <div class="container">
-       <div class="row justify-content-center" style="margin-left: 476px;">
+       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
-            <img  src="{% static 'store/img/user/' %}{{ picture }}" alt="{{ name }}" style="margin-left: -50px;">
+            <img  src="{% static 'store/img/user/' %}{{ picture }}" alt="{{ name }}">
           <h1 class="text-white mt-0 text-center">{{ name }}</h1>
-          <hr class="divider light my-4" style="margin-left: 4px;border-left-width: 5.2rem;border-left-style: solid;">
+          <hr class="divider light my-4">
 
         </div>
       </div>>
@@ -23,14 +23,13 @@
     <div class="container">
        <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
-          <h1 class="text-white mt-0 text-center">{{ mail }}</h1>
+          <h1 class="text-white mt-0">{{ mail }}</h1>
           <hr class="divider light my-4">
         </div>
       </div>>
 
         </div>
-      </div>
-    </div>
+
 
   </section>
 {% endblock %}

@@ -1,14 +1,13 @@
 {% extends 'store/base.html' %}
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-md-6 text-center">
 
-    <form id="myRegister" action="{% url 'store:register' %}" method="post">
+
+    <form action="{% url 'store:register' %}" method="post">
+      <p><h1><br><br><br></h1></p>
     {% csrf_token %}
       {{ forml }}
     <button type="submit" class="btn btn-success">Enregistrer</button>
 </form>
-</div>
-</div>
+
 
 {% endblock %}
