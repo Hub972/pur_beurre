@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import dj_database_url
-import django_heroku
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,7 +31,7 @@ else:
     DEBUG = True
 
 
-ALLOWED_HOSTS = ['tppurbeurre.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['51.15.215.223']
 
 
 # Application definition
@@ -86,8 +86,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'openfoodfacts',
         'USER': 'stud',
-        'PASSWORD': 'Honneur',
-        'HOST': '',
+        'PASSWORD': 'tp10',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -141,9 +141,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
         os.path.join(PROJECT_ROOT, 'static'),
     )
     # Simplified static file serving.
-    # https://warehouse.python.org/project/whitenoise/
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES['default'].update(db_from_env)
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+
