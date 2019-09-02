@@ -9,10 +9,11 @@ env: DJANGO_SETTINGS_MODULE="settings"
 
 services:
   - postgresql
+env: DJANGO_SETTINGS_MODULE=settings.travis
 
 script:
   - ./manage.py test
 
-branches:
-  only:
-    - master
+
+
+
