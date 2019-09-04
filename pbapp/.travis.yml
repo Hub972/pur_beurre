@@ -2,9 +2,13 @@ language: python
 python:
   - '3.6.8'
 
+branches:
+  only:
+    - dply
+
+
 before_script:
   - pip install -r requirements.txt
-
 
 
 services:
