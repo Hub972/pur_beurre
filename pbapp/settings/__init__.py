@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import dj_database_url
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://03cf5f75a2f04895b8d8e10ae5006c23@sentry.io/1551210",
+    integrations=[DjangoIntegration()]
+)
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -27,10 +34,10 @@ SECRET_KEY = '-~aO;| F;rE[??/w^zcumh(9'
 # qqyax0l0yj_)fqhg=w&va69=pr^i$rtqq^w$ff1z-q@gkfgui)
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = True
 
 
-ALLOWED_HOSTS = ['51.15.215.223']
+ALLOWED_HOSTS = ['51.15.215.223','127.0.0.1']
 
 
 # Application definition
@@ -47,7 +54,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -130,16 +136,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Static files settings
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
-# Simplified static file serving.
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
