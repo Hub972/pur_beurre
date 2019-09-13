@@ -6,11 +6,14 @@ from django.db import transaction
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth import authenticate, login, logout
 import random
+import logging
 
 from .forms import Register, ParagraphErrorList, SearchProduct, LogIn
 from .request_.offs_req import AllRequests
 from .models import ProductsNutriTypeA, Favorite, PictureUser
 
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 
@@ -161,6 +164,9 @@ def search(request):
                    'user': user,
                    'item': item
                    }
+        logger.info('New search', exc_info=True, extra={
+        # Optionally pass a request and we'll grab any information we can
+        'request': request, })
         return render(request, 'store/result.html', context)
 
 
