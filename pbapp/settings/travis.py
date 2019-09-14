@@ -8,5 +8,6 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
-    },
+    }
+}
 
