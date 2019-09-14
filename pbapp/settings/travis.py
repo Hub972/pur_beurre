@@ -9,4 +9,5 @@ DATABASES = {
         'HOST': '',
         'PORT': '',
     }
+}
 
