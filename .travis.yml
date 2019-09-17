@@ -13,4 +13,6 @@ env: DJANGO_SETTINGS_MODULE="settings.travis"
 
 script:
   - cd pbapp
+  - python manage.py makemigrations
+  - python manage.py migrate
   - python manage.py test
