@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'openfoodfacts',
         'USER': 'stud',
-        'PASSWORD': 'tp10',
+        'PASSWORD': 'Honneur',
         'HOST': 'localhost',
         'PORT': '5432',
     }
