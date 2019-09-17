@@ -11,4 +11,5 @@ services:
   - postgresql
 env: DJANGO_SETTINGS_MODULE="settings.travis"
 script:
-  - python pbapp/manage.py test
+  - cd pbapp
+  - python manage.py test
