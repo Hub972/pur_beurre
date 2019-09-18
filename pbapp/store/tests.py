@@ -44,6 +44,16 @@ class LoginTestDetailCase(TestCase):
         user = authenticate(username='marc', password='marc')
         self.assertTrue(user)
 
+    def test_change_pass_user(self):
+        """Test change password user"""
+        user = User.objects.get_by_natural_key("marc")
+        oldPasswd = user.password
+        user.set_password('marco')
+        user.save()
+        self.assertNotEqual(user.password, oldPasswd)
+        user = authenticate(username='marc', password='marco')
+        self.assertEqual(user.username, 'marc')
+
     def test_bad_login_user(self):
         """Test reconnect user"""
         user = authenticate(username='marc', password='m')

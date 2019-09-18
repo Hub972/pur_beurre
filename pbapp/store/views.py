@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 import random
 import logging
 
-from .forms import Register, ParagraphErrorList, SearchProduct, LogIn
+from .forms import Register, ParagraphErrorList, SearchProduct, LogIn, ChangePassword
 from .request_.offs_req import AllRequests
 from .models import ProductsNutriTypeA, Favorite, PictureUser
 
@@ -47,9 +47,16 @@ def register_(request):
             user.save()
             formlg = LogIn()
             context = {
-                'formlg': formlg,
                 'form': form}
             return render(request, 'store/thanks.html', context)
+        else:
+            forml = Register()
+            context = {
+                'logEr': True,
+                'forml': forml,
+                'form': form,
+            }
+            return render(request, 'store/register_user.html', context)
     else:
         forml = Register()
         context = {
@@ -71,6 +78,7 @@ def login_(request):
 def my_count(request):
     """account page"""
     form = SearchProduct()
+    passForm = ChangePassword()
     user = request.user.id
     try:
         picture = PictureUser.objects.get(id_user=user)
@@ -84,9 +92,57 @@ def my_count(request):
     context = {'name': name,
                'mail': mail,
                'form': form,
-               'picture': picture
+               'picture': picture,
+               'passwd': passForm,
                }
     return render(request, 'store/my_place.html', context)
+
+
+def change_password(request):
+    """Script for confirm and change password user"""
+    if request.method == 'POST':
+        formp = ChangePassword(request.POST, error_class=ParagraphErrorList)
+        if formp.is_valid():
+            userId = request.user.id
+            detUser = get_object_or_404(User, pk=userId)
+            passwd = formp.cleaned_data['passwd']
+            confPasswd = formp.cleaned_data['confPasswd']
+            if passwd != confPasswd:
+                form = SearchProduct()
+                passForm = ChangePassword()
+                try:
+                    picture = PictureUser.objects.get(id_user=userId)
+                    picture = picture.name
+                except Exception:
+                    picture = ";-)"
+                context = {
+                    'name': detUser.username,
+                    'mail': detUser.email,
+                    'form': form,
+                    'picture': picture,
+                    'passwd': passForm,
+                    'logEr': True
+                }
+                return render(request, 'store/my_place.html', context)
+            else:
+                detUser.set_password(passwd)
+                detUser.save()
+                form = SearchProduct()
+                passForm = ChangePassword()
+                try:
+                    picture = PictureUser.objects.get(id_user=userId)
+                    picture = picture.name
+                except Exception:
+                    picture = ";-)"
+                context = {
+                    'name': detUser.username,
+                    'mail': detUser.email,
+                    'form': form,
+                    'picture': picture,
+                    'passwd': passForm,
+                    'done': True
+                }
+                return render(request, 'store/my_place.html', context)
 
 
 def connect_user(request):

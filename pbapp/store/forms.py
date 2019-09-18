@@ -52,3 +52,18 @@ class ParagraphErrorList(ErrorList):
         if not self:
             return ''
         return '<div class="errorlist">%s</div>' % ''.join(['<p class="small error">%s</p>' % e for e in self])
+
+
+class ChangePassword(forms.Form):
+    passwd = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(attrs={'class': 'form-group', 'placeholder': 'Mot de passe'}),
+        required=True
+    )
+    confPasswd = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(attrs={'class': 'form-group', 'placeholder': 'Confirmer mot de passe'}),
+        required=True
+    )
+
+
