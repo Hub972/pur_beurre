@@ -92,7 +92,7 @@ DATABASES = {
         'NAME': 'openfoodfacts',
         'USER': 'stud',
         'PASSWORD': 'tp10',
-        'HOST': 'localhost',
+        'HOST': 'localhos',
         'PORT': '5432',
     }
 }
