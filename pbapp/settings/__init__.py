@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-from h_file import passwd, KEY
 import os
 import dj_database_url
 import sentry_sdk
@@ -19,7 +18,13 @@ sentry_sdk.init(
     dsn="https://03cf5f75a2f04895b8d8e10ae5006c23@sentry.io/1551210",
     integrations=[DjangoIntegration()]
 )
+def prod_mod_key():
+    from h_file import KEY
+    return KEY
 
+def prod_mod_pass():
+    from h_file import passwd
+    return passwd
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,7 +34,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = KEY
+SECRET_KEY = prod_mod_key()
 
 # qqyax0l0yj_)fqhg=w&va69=pr^i$rtqq^w$ff1z-q@gkfgui)
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -91,7 +96,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'openfoodfacts',
         'USER': 'stud',
-        'PASSWORD': passwd,
+        'PASSWORD': prod_mod_pass(),
         'HOST': 'localhost',
         'PORT': '5432',
     }
