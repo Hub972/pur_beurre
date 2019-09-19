@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-
+from h_file import passwd, KEY
 import os
 import dj_database_url
 import sentry_sdk
@@ -29,7 +29,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-~aO;| F;rE[??/w^zcumh(9'
+SECRET_KEY = KEY
 
 # qqyax0l0yj_)fqhg=w&va69=pr^i$rtqq^w$ff1z-q@gkfgui)
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'openfoodfacts',
         'USER': 'stud',
-        'PASSWORD': 'Honneur',
+        'PASSWORD': passwd,
         'HOST': 'localhost',
         'PORT': '5432',
     }
